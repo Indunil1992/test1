@@ -1,0 +1,168 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "07a2a3db-238b-4f85-90e9-a497fb7085aa": {
+        "id": "07a2a3db-238b-4f85-90e9-a497fb7085aa",
+        "parent": null,
+        "name": "test1",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "a35a4a36-8f1f-4102-a2a8-501a752b015e"
+        ],
+        "isRemovable": false,
+        "filePath": "test1"
+      },
+      "a35a4a36-8f1f-4102-a2a8-501a752b015e": {
+        "id": "a35a4a36-8f1f-4102-a2a8-501a752b015e",
+        "parent": "07a2a3db-238b-4f85-90e9-a497fb7085aa",
+        "name": "lambda.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "test1/lambda.js",
+        "code": "let AWS = require('aws-sdk');\nconst ses = new AWS.SES();\nconst s3 = new AWS.S3();\n\nexports.handler = function (event, context, callback) {\n    s3.putObject({\n        \"Body\": \"1\",\n        \"Bucket\": \"testbucket1\",\n        \"Key\": \"10\"\n    })\n        .promise()\n        .then(data => {\n            console.log(data);           // successful response\n            /*\n            data = {\n                ETag: \"\\\"6805f2cfc46c0f04559748bb039d69ae\\\"\",\n                VersionId: \"pSKidl4pHBiNwukdbcPXAIs.sshFFOc0\"\n            }\n            */\n        })\n        .catch(err => {\n            console.log(err, err.stack); // an error occurred\n        });\n    ses.sendEmail({\n        Destination: {\n            ToAddresses: ['indunil@adroitlogic.com'],\n            CcAddresses: [],\n            BccAddresses: []\n        },\n        Message: {\n            Body: {\n                Text: {\n                    Data: 'As you can see, I gradually moved forward with Sigma IDE, with minimum prior knowledge of how to build a serverless application. Sigma handles all the hard works and delivers the coolest Serverless IDE to your hands.'\n                }\n            },\n            Subject: {\n                Data: 'subject test 1'\n            }\n        },\n        Source: 'hirudinee+aws@adroitlogic.com',\n    }, function (err, data) {\n        if (err) console.log(err, err.stack); // an error occurred\n        else console.log(data);           // successful response\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": [
+          {
+            "resourceName": "apigusEast1London1qainduany",
+            "config": {}
+          }
+        ]
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "07a2a3db-238b-4f85-90e9-a497fb7085aa",
+    "openFiles": [
+      "a35a4a36-8f1f-4102-a2a8-501a752b015e"
+    ],
+    "currentFileId": "a35a4a36-8f1f-4102-a2a8-501a752b015e",
+    "resources": {
+      "apigusEast1London1qainduany": {
+        "name": "apigusEast1London1qainduany",
+        "type": "API_GATEWAY",
+        "config": {
+          "selectedRegion": "us-east-1",
+          "apiMode": 0,
+          "apiName": "London1",
+          "endpointType": "REGIONAL",
+          "resourceMode": 0,
+          "resourceName": "qa/indu",
+          "resourcePath": "/qa/indu",
+          "restMethod": "ANY",
+          "proxyIntegration": false,
+          "enableCORS": false,
+          "stageMode": 0,
+          "stageName": "Test",
+          "mode": 0
+        }
+      },
+      "s3as2TestLahiru": {
+        "name": "s3as2TestLahiru",
+        "type": "S3",
+        "config": {
+          "mode": 1,
+          "bucket": {
+            "region": "us-east-1",
+            "name": "as2-test-lahiru"
+          }
+        }
+      },
+      "ses-janakaud@gmail.com": {
+        "name": "ses-janakaud@gmail.com",
+        "type": "SES",
+        "config": {
+          "selectedIdentity": "janakaud@gmail.com",
+          "projectRegion": "us-east-1",
+          "params": {
+            "to": "indunil@adroitlogic.com",
+            "cc": "indunil@adroitlogic.com",
+            "bcc": "indunil@adroitlogic.com",
+            "subject": "subject 1",
+            "body": {
+              "text": "As you can see, I gradually moved forward with Sigma IDE, with minimum prior knowledge of how to build a serverless application. Sigma handles all the hard works and delivers the coolest Serverless IDE to your hands.\n",
+              "html": ""
+            }
+          }
+        }
+      },
+      "ses-hirudinee+aws@adroitlogic.com": {
+        "name": "ses-hirudinee+aws@adroitlogic.com",
+        "type": "SES",
+        "config": {
+          "selectedIdentity": "hirudinee+aws@adroitlogic.com",
+          "projectRegion": "us-east-1",
+          "params": {
+            "to": "indunil@adroitlogic.com",
+            "cc": "",
+            "bcc": "",
+            "subject": "subject test 1",
+            "body": {
+              "text": "As you can see, I gradually moved forward with Sigma IDE, with minimum prior knowledge of how to build a serverless application. Sigma handles all the hard works and delivers the coolest Serverless IDE to your hands.",
+              "html": ""
+            }
+          }
+        }
+      },
+      "s3testbucket1": {
+        "name": "s3testbucket1",
+        "type": "S3",
+        "config": {
+          "mode": 0,
+          "bucket": {
+            "region": "us-east-1",
+            "name": "testbucket1"
+          }
+        }
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": {}
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "aws-sdk": {
+          "name": "aws-sdk",
+          "language": "javascript",
+          "version": "2.176.0",
+          "dev": true,
+          "notRemovable": false
+        }
+      }
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "test1",
+    "projectDescription": "test run",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1565930211754
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "test1",
+      "url": "https://github.com/Indunil1992/test1"
+    }
+  }
+}
