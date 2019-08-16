@@ -22,7 +22,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "test1/lambda.js",
-        "code": "let AWS = require('aws-sdk');\nconst ses = new AWS.SES();\nconst s3 = new AWS.S3();\n\nexports.handler = function (event, context, callback) {\n    s3.putObject({\n        \"Body\": \"1\",\n        \"Bucket\": \"testbucket1\",\n        \"Key\": \"10\"\n    })\n        .promise()\n        .then(data => {\n            console.log(data);           // successful response\n            /*\n            data = {\n                ETag: \"\\\"6805f2cfc46c0f04559748bb039d69ae\\\"\",\n                VersionId: \"pSKidl4pHBiNwukdbcPXAIs.sshFFOc0\"\n            }\n            */\n        })\n        .catch(err => {\n            console.log(err, err.stack); // an error occurred\n        });\n    ses.sendEmail({\n        Destination: {\n            ToAddresses: ['indunil@adroitlogic.com'],\n            CcAddresses: [],\n            BccAddresses: []\n        },\n        Message: {\n            Body: {\n                Text: {\n                    Data: 'As you can see, I gradually moved forward with Sigma IDE, with minimum prior knowledge of how to build a serverless application. Sigma handles all the hard works and delivers the coolest Serverless IDE to your hands.'\n                }\n            },\n            Subject: {\n                Data: 'subject test 1'\n            }\n        },\n        Source: 'hirudinee+aws@adroitlogic.com',\n    }, function (err, data) {\n        if (err) console.log(err, err.stack); // an error occurred\n        else console.log(data);           // successful response\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "code": "let AWS = require('aws-sdk');\nconst sns = new AWS.SNS();\nconst ses = new AWS.SES();\nconst s3 = new AWS.S3();\n\nexports.handler = function (event, context, callback) {\n    s3.putObject({\n        \"Body\": \"1\",\n        \"Bucket\": \"indunil1\",\n        \"Key\": \"10\"\n    })\n        .promise()\n        .then(data => {\n            console.log(data);           // successful response\n            /*\n            data = {\n                ETag: \"\\\"6805f2cfc46c0f04559748bb039d69ae\\\"\",\n                VersionId: \"pSKidl4pHBiNwukdbcPXAIs.sshFFOc0\"\n            }\n            */\n        })\n        .catch(err => {\n            console.log(err, err.stack); // an error occurred\n        });\n    ses.sendEmail({\n        Destination: {\n            ToAddresses: ['indunil@adroitlogic.com'],\n            CcAddresses: [],\n            BccAddresses: []\n        },\n        Message: {\n            Body: {\n                Text: {\n                    Data: 'As you can see, I gradually moved forward with Sigma IDE, with minimum prior knowledge of how to build a serverless application. Sigma handles all the hard works and delivers the coolest Serverless IDE to your hands.'\n                }\n            },\n            Subject: {\n                Data: 'subject test 1'\n            }\n        },\n        Source: 'hirudinee+aws@adroitlogic.com',\n    }, function (err, data) {\n        if (err) console.log(err, err.stack); // an error occurred\n        else console.log(data);           // successful response\n    });\n    sns.publish({\n        Message: 'test sample',\n        Subject: 'subject 1',\n        MessageAttributes: {},\n        MessageStructure: 'String',\n        TopicArn: 'arn:aws:sns:us-east-1:318300609668:amplify_codecommit_topic'\n    }).promise()\n        .then(data => {\n            // your code goes here\n        })\n        .catch(err => {\n            // error handling goes here\n        });\n\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -121,6 +121,29 @@
             "name": "testbucket1"
           }
         }
+      },
+      "s3indunil1": {
+        "name": "s3indunil1",
+        "type": "S3",
+        "config": {
+          "mode": 1,
+          "bucket": {
+            "region": "us-east-1",
+            "name": "indunil1"
+          }
+        }
+      },
+      "snsusEast1amplifycodecommittopic": {
+        "name": "snsusEast1amplifycodecommittopic",
+        "type": "SNS",
+        "config": {
+          "topicMode": 1,
+          "topicName": "amplify_codecommit_topic",
+          "topicArn": "arn:aws:sns:us-east-1:318300609668:amplify_codecommit_topic",
+          "topicRegion": "us-east-1",
+          "snsType": 0,
+          "subscriptions": []
+        }
       }
     },
     "customTemplate": {
@@ -156,7 +179,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1565930211754
+    "lastSave": 1565930391542
   },
   "VCS_STATE": {
     "provider": "GitHub",

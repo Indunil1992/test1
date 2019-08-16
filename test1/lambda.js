@@ -1,11 +1,12 @@
 let AWS = require('aws-sdk');
+const sns = new AWS.SNS();
 const ses = new AWS.SES();
 const s3 = new AWS.S3();
 
 exports.handler = function (event, context, callback) {
     s3.putObject({
         "Body": "1",
-        "Bucket": "testbucket1",
+        "Bucket": "indunil1",
         "Key": "10"
     })
         .promise()
@@ -42,6 +43,20 @@ exports.handler = function (event, context, callback) {
         if (err) console.log(err, err.stack); // an error occurred
         else console.log(data);           // successful response
     });
+    sns.publish({
+        Message: 'test sample',
+        Subject: 'subject 1',
+        MessageAttributes: {},
+        MessageStructure: 'String',
+        TopicArn: 'arn:aws:sns:us-east-1:318300609668:amplify_codecommit_topic'
+    }).promise()
+        .then(data => {
+            // your code goes here
+        })
+        .catch(err => {
+            // error handling goes here
+        });
+
 
     callback(null, { "message": "Successfully executed" });
 }
